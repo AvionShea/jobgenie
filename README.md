@@ -6,14 +6,14 @@ An intelligent job application assistant that leverages AI to analyze job descri
 
 ### ✅ Currently Implemented
 
-- **Job Description Analysis** - AI-powered analysis of job requirements, skills, and fit scoring
-- **Resume Optimization** - Intelligent resume analysis with personalized improvement recommendations
-- **Match Scoring** - Quantitative assessment of resume-job compatibility
+- **Job Description Analysis** - AI-powered analysis of job requirements, skills, and responsibilities
 - **Keyword Optimization** - Identify and suggest important keywords from job descriptions
 - **Rate Limiting** - Production-ready API rate limiting to manage costs and usage
 
 ### 🚧 Planned Features
 
+- **Resume Optimization** - Intelligent resume analysis with personalized improvement recommendations
+- **Match Scoring** - Quantitative assessment of resume-job compatibility
 - **Cover Letter Generation** - AI-generated, personalized cover letters
 - **Mock Interviews** - Interactive voice-based interview practice with AI
 - **Company Research** - Automated research on company culture, values, and recent news
