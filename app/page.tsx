@@ -6,6 +6,10 @@ export default function Home() {
   const [jobDescription, setJobDescription] = useState('');
   const [analysis, setAnalysis] = useState('');
   const [loading, setLoading] = useState(false);
+  const [rateLimitInfo, setRateLimitInfo] = useState<{
+    remaining: number;
+    dailyRemaining: number;
+  } | null>(null);
 
   const analyzeJob = async () => {
     setLoading(true);
@@ -17,7 +21,14 @@ export default function Home() {
       });
 
       const data = await response.json();
+
+      if (response.status === 429) {
+        alert(data.error);
+        return;
+      }
+
       setAnalysis(data.analysis);
+      setRateLimitInfo(data.rateLimitStatus);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -27,6 +38,14 @@ export default function Home() {
   return (
     <main className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-8">AI Job Assistant</h1>
+
+      {rateLimitInfo && (
+        <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+          <p className="text-sm text-blue-700">
+            Rate Limit: {rateLimitInfo.remaining} requests remaining this minute, {rateLimitInfo.dailyRemaining} remaining today
+          </p>
+        </div>
+      )}
 
       <div className="space-y-6">
         <div>
