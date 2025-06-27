@@ -33,8 +33,8 @@ export async function POST(request: NextRequest) {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `Act as a recruiter and resume writer with 14 years of experience in each role. With knowledge of how recruiters read resumes and before providing any help, analyze and scrutinize the pasted job description and extract:
-    1. Top 5 required skills
-    2. Top 3 nice-to-have skills
+    1. Top 10 required skills
+    2. Top 5 nice-to-have skills
     3. Key responsibilities
     4. Keywords that should be included in a resume to get through the ATS
 
