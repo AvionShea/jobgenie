@@ -8,7 +8,7 @@ interface RateLimitEntry {
 class RateLimiter {
   private requests = new Map<string, RateLimitEntry>();
   private readonly maxPerMinute = 10;
-  private readonly maxPerDay = 1200;
+  private readonly maxPerDay = 200;
 
   isAllowed(identifier: string): { allowed: boolean; message?: string } {
     const now = Date.now();
