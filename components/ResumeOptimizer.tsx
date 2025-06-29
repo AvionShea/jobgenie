@@ -10,6 +10,7 @@ interface OptimizationResult {
     recommendations: string[];
     keywordsToAdd: string[];
     optimizedSummary: string;
+    implementedSuggestions: string;
 }
 
 export default function ResumeOptimizer() {
@@ -168,6 +169,12 @@ export default function ResumeOptimizer() {
                     <div className="p-4 bg-yellow-50 rounded-lg">
                         <h3 className="font-bold text-lg mb-2 text-yellow-800">Optimized Professional Summary</h3>
                         <p className="text-yellow-700 italic">{result.optimizedSummary}</p>
+                    </div>
+
+                    {/* Implemented Suggestions */}
+                    <div className="p-4 bg-pink-50 rounded-lg">
+                        <h3 className="font-bold text-lg mb-2 text-pink-800">Implemented Suggestions</h3>
+                        <p className="text-pink-700">{result.implementedSuggestions}</p>
                     </div>
 
                 </div>
