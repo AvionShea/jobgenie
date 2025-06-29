@@ -71,12 +71,12 @@ export async function POST(request: NextRequest) {
 
         Please provide a JSON response with:
         1. "targetJobTitle": The job title listed on job description
-        1. "matchScore": Overall match percentage (0-100) of resume to job description
-        2. "strengths": Array of 3-5 strengths that align with the job
-        3. "gaps": Array of 3-5 skills/experiences missing from resume
-        4. "recommendations": Array of 5-7 specific improvements to make
-        5. "keywordsToAdd": Array of important keywords from job description to include
-        6. "optimizedSummary": A rewritten summary section
+        2. "matchScore": Overall match percentage (0-100) of resume to job description
+        3. "strengths": Array of 3-5 strengths that align with the job
+        4. "gaps": Array of 3-5 skills/experiences missing from resume
+        5. "recommendations": Array of 5-7 specific improvements to make
+        6. "keywordsToAdd": Array of important keywords from job description to include
+        7. "optimizedSummary": A rewritten summary section
 
         Format your response as valid JSON only.`;
 
