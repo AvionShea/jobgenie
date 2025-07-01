@@ -3,12 +3,13 @@
 import { useState } from "react";
 
 interface OptimizationResult {
-    targetJobTitle: string[];
+    targetJobTitle: string;
     matchScore: number;
     strengths: string[];
     gaps: string[];
     recommendations: string[];
     keywordsToAdd: string[];
+    transferableSkills: string[];
     optimizedSummary: string;
     implementedSuggestions: string;
 }
@@ -155,11 +156,23 @@ export default function ResumeOptimizer() {
 
                     {/* Keywords */}
                     <div className="p-4 bg-purple-50 text-black rounded-lg">
-                        <h3 className="font-bold text-lg mb-2 text-purple-800">Keywords to Include</h3>
+                        <h3 className="font-bold text-lg mb-2 text-purple-800">Keywords to Include in Resume</h3>
                         <div className="flex flex-wrap gap-2">
                             {result.keywordsToAdd?.map((keyword, index) => (
                                 <span key={index} className="bg-purple-200 px-3 py-1 rounded-full text-sm">
                                     {keyword}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Transferable Skills */}
+                    <div className="p-4 bg-orange-50 text-black rounded-lg">
+                        <h3 className="font-bold text-lg mb-2 text-orange-800">Transferable Skills</h3>
+                        <div className="flex flex-wrap gap-2">
+                            {result.transferableSkills?.map((skill, index) => (
+                                <span key={index} className="bg-orange-200 px-3 py-1 rounded-full text-sm">
+                                    {skill}
                                 </span>
                             ))}
                         </div>

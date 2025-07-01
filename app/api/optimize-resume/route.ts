@@ -76,8 +76,9 @@ export async function POST(request: NextRequest) {
         4. "gaps": Array of 3-7 skills/experiences missing from resume
         5. "recommendations": Array of 5-10 specific improvements to make
         6. "keywordsToAdd": Array of important keywords from job description to include
-        7. "optimizedSummary": A rewritten summary section
-        8. "implementedSuggestions": A rewritten resume with gaps, recommendations, and keywordsToAdd are implemented
+        7. "transferableSkills": Array of transferable skills that align with the job description
+        8. "optimizedSummary": A rewritten summary section
+        9. "implementedSuggestions": A rewritten resume with gaps, recommendations, and keywordsToAdd are implemented
 
         Format your response as valid JSON only.`;
 

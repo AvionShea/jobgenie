@@ -8,6 +8,7 @@ An intelligent job application assistant that leverages AI to analyze job descri
 
 - **Job Description Analysis** - AI-powered analysis of job requirements, skills, and responsibilities
 - **Keyword Optimization** - Identify and suggest important keywords from job descriptions
+- **Transferable Skills Generation** - Identify skills that are transferable and relatable to desired job
 - **Rate Limiting** - Production-ready API rate limiting to manage costs and usage
 
 ### 🚧 Planned Features
@@ -184,7 +185,7 @@ Provides resume optimization recommendations based on job requirements.
 The application implements intelligent rate limiting to stay within API quotas:
 
 - **10 requests per minute** per IP address
-- **1,200 requests per day** per IP address
+- **200 requests per day** per IP address
 - Automatic rate limit status reporting
 - User-friendly error messages when limits are exceeded
 
