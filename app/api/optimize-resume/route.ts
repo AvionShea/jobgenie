@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     console.log("Starting AI analysis...");
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `You are an expert resume optimizer with 20+ years of experience. Analyze the resume and job description and provide specific recommendations.
+    const prompt = `You are an expert resume optimizer with 20+ years of experience. Analyze the resume and job description and provide specific recommendations utilizing the required skills.
         
         RESUME:
         ${resumeText}
@@ -76,9 +76,9 @@ export async function POST(request: NextRequest) {
         4. "gaps": Array of 3-7 skills/experiences missing from resume
         5. "recommendations": Array of 5-10 specific improvements to make
         6. "keywordsToAdd": Array of important keywords from job description to include
-        7. "transferableSkills": Array of transferable skills that align with the job description
+        7. "transferableSkills": Array of transferable skills, which include keywords from experiences that align with the job description
         8. "optimizedSummary": A rewritten summary section
-        9. "implementedSuggestions": A rewritten resume with gaps, recommendations, and keywordsToAdd are implemented
+        9. "implementedSuggestions": A rewritten resume with gaps, recommendations, required skills, suggested XYZ method and keywordsToAdd are implemented
 
         Format your response as valid JSON only.`;
 

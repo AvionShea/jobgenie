@@ -186,7 +186,9 @@ export default function ResumeOptimizer() {
 
                     {/* Implemented Suggestions */}
                     <div className="p-4 bg-pink-50 rounded-lg">
+                        <p className="text-black text-3xl">Please review! These are <span className="font-bold font-italic text-red-700">suggestions</span>! Do <span className="font-bold font-italic text-red-700">NOT</span> copy and paste.</p>
                         <h3 className="font-bold text-lg mb-2 text-pink-800">Implemented Suggestions</h3>
+
                         <p className="text-pink-700">{result.implementedSuggestions}</p>
                     </div>
 
