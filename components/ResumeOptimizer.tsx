@@ -65,7 +65,7 @@ export default function ResumeOptimizer() {
             {rateLimitInfo && (
                 <div className="p-3 bg-blue-50 rounded-lg">
                     <p className="text-sm text-blue-700">
-                        Rate Limit: {rateLimitInfo.remaining} requests remaining this minute, {rateLimitInfo.dailyRemaining} remaining today.
+                        Rate Limit: {rateLimitInfo.remaining} requests remaining this minute; {rateLimitInfo.dailyRemaining} remaining today.
                     </p>
                 </div>
             )}
