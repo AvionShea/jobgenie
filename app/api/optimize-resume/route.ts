@@ -99,22 +99,49 @@ export async function POST(request: NextRequest) {
       .replace(/```\n?/g, "")
       .trim();
 
+    // Remove any text before the first { and after the last }
+    const firstBrace = analysis.indexOf("{");
+    const lastBrace = analysis.lastIndexOf("}");
+
+    if (firstBrace !== -1 && lastBrace !== -1) {
+      analysis = analysis.substring(firstBrace, lastBrace + 1);
+    }
+
+    console.log("Cleaned analysis preview:", analysis.substring(0, 200));
+
+    // Try to parse the JSON
+    let parsedAnalysis;
+    try {
+      parsedAnalysis = JSON.parse(analysis);
+      console.log(
+        "Successfully parsed JSON. Keys:",
+        Object.keys(parsedAnalysis)
+      );
+    } catch (parseError) {
+      console.error("Failed to parse cleaned JSON:", parseError);
+      console.error("Cleaned analysis was:", analysis);
+      return NextResponse.json(
+        { error: "AI response was not valid JSON format" },
+        { status: 500 }
+      );
+    }
+
     const status = rateLimiter.getStatus(clientIP);
 
     console.log("Sending successful response");
     return NextResponse.json({
       success: true,
-      analysis: analysis,
-      timeStamp: new Date().toISOString(),
+      analysis: parsedAnalysis, // Send as parsed object
+      timestamp: new Date().toISOString(),
       rateLimitStatus: {
         remaining: status.remaining,
         dailyRemaining: status.dailyRemaining,
       },
     });
   } catch (error) {
-    console.error("Error optimizing resume: ", error);
+    console.error("Error optimizing resume:", error);
     return NextResponse.json(
-      { error: "Failed to optimize resume." + (error as Error).message },
+      { error: "Failed to optimize resume: " + (error as Error).message },
       { status: 500 }
     );
   }

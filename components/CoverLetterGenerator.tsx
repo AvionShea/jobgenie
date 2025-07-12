@@ -115,7 +115,7 @@ export default function CoverLetterGenerator() {
                                 value={hiringManager}
                                 onChange={(e) => setHiringManager(e.target.value)}
                                 className="w-full p-3 border rounded-lg"
-                                placeholder="e.g. Ms. Smith"
+                                placeholder="e.g. Regina Smith"
                             />
                         </div>
                     </div>
