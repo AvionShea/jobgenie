@@ -86,7 +86,12 @@ export async function POST(request: NextRequest) {
     const response = await result.response;
     let analysis = response.text();
 
-    console.log("AI response received, length:", analysis.length);
+    console.log(
+      "AI response received. Response: ",
+      analysis,
+      "length:",
+      analysis.length
+    );
 
     //clean up the response to extract JSON
     analysis = analysis
