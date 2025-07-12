@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Use Gemini for analysis
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `Act as a recruiter and resume writer with 14 years of experience in each role. With knowledge of how recruiters read resumes and before providing any help, analyze and scrutinize the pasted job description and extract:
     1. Top 10 required skills
