@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     }
 
     console.log("Starting AI analysis...");
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `You are an expert resume optimizer with 20+ years of experience. Analyze the resume and job description and provide specific recommendations utilizing the required skills.
         
