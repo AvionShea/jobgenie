@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import ResumeOptimizer from '@/components/ResumeOptimizer';
+import CoverLetterGenerator from '@/components/CoverLetterGenerator';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'job-analysis' | 'resume-optimizer'>('job-analysis');
+  const [activeTab, setActiveTab] = useState<'job-analysis' | 'resume-optimizer' | 'cover-letter'>('job-analysis');
   const [jobDescription, setJobDescription] = useState('');
   const [analysis, setAnalysis] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,10 +43,10 @@ export default function Home() {
       <h1 className="text-3xl font-bold mb-8">AI Job Assistant</h1>
 
       {/* Tab Navigation */}
-      <div className="flex space-x-4 mb-8">
+      <div className="flex space-x-4 mb-8 overflow-x-auto">
         <button
           onClick={() => setActiveTab('job-analysis')}
-          className={`px-4 py-2 rounded-lg font-medium cursor-pointer ${activeTab === 'job-analysis'
+          className={`px-4 cursor-pointer py-2 rounded-lg font-medium whitespace-nowrap ${activeTab === 'job-analysis'
             ? 'bg-blue-500 text-white'
             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
@@ -54,12 +55,21 @@ export default function Home() {
         </button>
         <button
           onClick={() => setActiveTab('resume-optimizer')}
-          className={`px-4 py-2 rounded-lg font-medium cursor-pointer ${activeTab === 'resume-optimizer'
+          className={`cursor-pointer px-4 py-2 rounded-lg font-medium whitespace-nowrap ${activeTab === 'resume-optimizer'
             ? 'bg-green-500 text-white'
             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
         >
           Resume Optimizer
+        </button>
+        <button
+          onClick={() => setActiveTab('cover-letter')}
+          className={`cursor-pointer px-4 py-2 rounded-lg font-medium whitespace-nowrap ${activeTab === 'cover-letter'
+            ? 'bg-purple-500 text-white'
+            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+        >
+          Cover Letter
         </button>
       </div>
 
@@ -69,14 +79,15 @@ export default function Home() {
           {rateLimitInfo && (
             <div className="mb-4 p-3 bg-blue-50 rounded-lg">
               <p className="text-sm text-blue-700">
-                Rate Limit: {rateLimitInfo.remaining} requests remaining this minute;{rateLimitInfo.dailyRemaining} remaining today.
+                Rate Limit: {rateLimitInfo.remaining} requests remaining this minute,
+                {rateLimitInfo.dailyRemaining} remaining today
               </p>
             </div>
           )}
 
           <div className="space-y-6">
             <div>
-              <label className="block text-lg font-medium mb-2">
+              <label className="block text-sm font-medium mb-2">
                 Paste Job Description:
               </label>
               <textarea
@@ -90,13 +101,13 @@ export default function Home() {
             <button
               onClick={analyzeJob}
               disabled={loading || !jobDescription}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg disabled:opacity-50 cursor-pointer"
+              className="cursor-pointer bg-blue-500 text-white px-6 py-2 rounded-lg disabled:opacity-50"
             >
               {loading ? 'Analyzing...' : 'Analyze Job'}
             </button>
 
             {analysis && (
-              <div className="mt-6 p-4 bg-black-100 rounded-lg">
+              <div className="mt-6 p-4 bg-gray-100 rounded-lg">
                 <h3 className="font-bold mb-2">Analysis:</h3>
                 <pre className="whitespace-pre-wrap">{analysis}</pre>
               </div>
@@ -106,6 +117,7 @@ export default function Home() {
       )}
 
       {activeTab === 'resume-optimizer' && <ResumeOptimizer />}
+      {activeTab === 'cover-letter' && <CoverLetterGenerator />}
     </main>
   );
 }
