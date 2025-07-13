@@ -1,6 +1,7 @@
 {
-  "name": "ai-job-assistant",
+  "name": "jobgenie",
   "version": "0.1.0",
+  "description": "AI-powered job search assistant",
   "private": true,
   "scripts": {
     "dev": "next dev",

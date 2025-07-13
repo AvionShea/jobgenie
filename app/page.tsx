@@ -40,7 +40,7 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-8">AI Job Assistant</h1>
+      <h1 className="text-3xl font-bold mb-8">JobGenie</h1>
 
       {/* Tab Navigation */}
       <div className="flex space-x-4 mb-8 overflow-x-auto">

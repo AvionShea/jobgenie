@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Job Assistant",
-  description: "Job assistant powered by AI",
+  title: "JobGenie - Your AI-Powered Job Search Assistant",
+  description: "Transform your job search with AI. Analyze jobs, optimize resumes, generate cover letters, and ace interviews with JobGenie.",
 };
 
 export default function RootLayout({
