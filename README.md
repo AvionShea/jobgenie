@@ -1,4 +1,4 @@
-# AI Job Assistant 🤖💼
+# JobGenie 🤖💼
 
 An intelligent job application assistant that leverages AI to analyze job descriptions, optimize resumes, and help job seekers land their dream roles. Built with modern web technologies and multiple AI providers for comprehensive job search support.
 
