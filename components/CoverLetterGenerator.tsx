@@ -134,7 +134,7 @@ export default function CoverLetterGenerator() {
                             ].map((option) => (
                                 <button
                                     key={option.value}
-                                    onClick={() => setTone(option.value as any)}
+                                    onClick={() => setTone(option.value as 'professional' | 'enthusiastic' | 'creative' | 'direct')}
                                     className={`p-3 text-left border rounded-lg cursor-pointer transition-colors ${tone === option.value
                                         ? 'bg-blue-500 text-white border-blue-500'
                                         : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
