@@ -40,7 +40,13 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-8">JobGenie</h1>
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold mb-2">JobGenie</h1>
+        <p className="text-xl text-gray-600">Your AI-powered job search companion</p>
+        <p className="text-sm text-gray-500 mt-2">
+          ✨ Analyze jobs • 📝 Optimize resumes • 💌 Craft cover letters • 🎯 Land your dream role
+        </p>
+      </div>
 
       {/* Tab Navigation */}
       <div className="flex space-x-4 mb-8 overflow-x-auto">
