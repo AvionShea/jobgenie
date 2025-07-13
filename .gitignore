@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 node_modules
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -20,6 +21,7 @@ node_modules
 
 # production
 /build
+build/
 
 # misc
 .DS_Store
@@ -41,3 +43,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
