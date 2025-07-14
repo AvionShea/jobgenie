@@ -68,8 +68,8 @@ An intelligent job application assistant that leverages AI to analyze job descri
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/AvionShea/ai-job-assistant
-   cd ai-job-assistant
+   git clone https://github.com/AvionShea/jobgenie
+   cd jobgenie
    ```
 
 2. **Install dependencies**
