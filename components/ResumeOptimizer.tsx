@@ -40,36 +40,93 @@ export default function ResumeOptimizer() {
                 return;
             }
 
+            if (!response.ok) {
+                throw new Error(data.error || 'Server error occurred');
+            }
+
             console.log('Received data:', data);
             console.log('Analysis type:', typeof data.analysis);
 
             // Handle both object and string responses
             if (data.success && data.analysis) {
+                let finalResult;
                 if (typeof data.analysis === 'object') {
-                    // API returned parsed object
-                    setResult(data.analysis);
+                    finalResult = data.analysis;
                 } else if (typeof data.analysis === 'string') {
                     // API returned string, need to parse
                     try {
-                        const parsedResult = JSON.parse(data.analysis);
-                        setResult(parsedResult);
+                        finalResult = JSON.parse(data.analysis);
                     } catch (parseError) {
                         console.error('Failed to parse JSON:', parseError);
                         console.log('Raw AI response:', data.analysis);
                         alert('AI response format error. Check console for details.');
+                        finalResult = createFallbackResult(data.analysis);
                     }
                 }
+                // Validate and sanitize the result
+                const sanitizedResult = sanitizeResult(finalResult);
+                setResult(sanitizedResult);
             } else {
                 console.error('Invalid response structure:', data);
                 alert('Invalid response from server');
+                throw new Error('Invalid response structure from server');
             }
 
             setRateLimitInfo(data.rateLimitStatus);
         } catch (error) {
             console.error('Error:', error);
             alert('Failed to optimize resume');
+            // Create a basic fallback result even when everything fails
+            const emergencyFallback = createEmergencyFallback();
+            setResult(emergencyFallback);
+
+            // Show user-friendly error but don't break the app
+            alert('JobGenie encountered an issue but created a basic analysis. Please try again for better results.');
         }
         setLoading(false);
+    };
+
+    // helper functions:
+    const createFallbackResult = (rawText: string): OptimizationResult => {
+        return {
+            targetJobTitle: "Unable to parse job title",
+            matchScore: 50,
+            strengths: ["Resume submitted successfully", "Contains relevant experience"],
+            gaps: ["Unable to analyze specific gaps", "Please try again for detailed analysis"],
+            recommendations: ["Reformat resume for better parsing", "Ensure clear section headers", "Try submitting again"],
+            keywordsToAdd: ["Unable to extract keywords"],
+            transferableSkills: ["Communication", "Problem-solving", "Teamwork"],
+            optimizedSummary: "Resume analysis encountered formatting issues. Please resubmit with clear formatting.",
+            implementedSuggestions: rawText.substring(0, 500) + "...\n\n[Analysis incomplete due to formatting issues]"
+        };
+    };
+
+    const createEmergencyFallback = (): OptimizationResult => {
+        return {
+            targetJobTitle: "Analysis Error",
+            matchScore: 0,
+            strengths: ["Resume received"],
+            gaps: ["Unable to complete analysis"],
+            recommendations: ["Please try again", "Check internet connection", "Ensure resume has clear formatting"],
+            keywordsToAdd: ["Please resubmit"],
+            transferableSkills: ["Communication", "Problem-solving"],
+            optimizedSummary: "JobGenie encountered an error during analysis. Please try again.",
+            implementedSuggestions: "Analysis could not be completed. Please resubmit your resume."
+        };
+    };
+
+    const sanitizeResult = (result: any): OptimizationResult => {
+        return {
+            targetJobTitle: String(result?.targetJobTitle || "Position Not Specified"),
+            matchScore: Number(result?.matchScore) || 0,
+            strengths: Array.isArray(result?.strengths) ? result.strengths.map(String) : ["Resume submitted"],
+            gaps: Array.isArray(result?.gaps) ? result.gaps.map(String) : ["Analysis incomplete"],
+            recommendations: Array.isArray(result?.recommendations) ? result.recommendations.map(String) : ["Please try again"],
+            keywordsToAdd: Array.isArray(result?.keywordsToAdd) ? result.keywordsToAdd.map(String) : ["Keywords not found"],
+            transferableSkills: Array.isArray(result?.transferableSkills) ? result.transferableSkills.map(String) : ["Communication", "Problem-solving"],
+            optimizedSummary: String(result?.optimizedSummary || "Summary could not be generated"),
+            implementedSuggestions: String(result?.implementedSuggestions || "Suggestions could not be generated")
+        };
     };
 
     return (

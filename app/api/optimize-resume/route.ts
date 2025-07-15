@@ -62,6 +62,8 @@ export async function POST(request: NextRequest) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `You are an expert resume optimizer with 20+ years of experience. Analyze the resume and job description and provide specific recommendations utilizing the required skills.
+
+    IMPORTANT: You MUST respond with valid JSON only, no matter what. If the resume is poorly formatted, do your best analysis anyway.
         
         RESUME:
         ${resumeText}
@@ -69,18 +71,25 @@ export async function POST(request: NextRequest) {
         JOB DESCRIPTION:
         ${jobDescription}
 
-        Please provide a JSON response with:
-        1. "targetJobTitle": The job title listed on job description
-        2. "matchScore": Overall match percentage (0-100) of resume to job description
-        3. "strengths": Array of 3-7 strengths that align with the job
-        4. "gaps": Array of 3-7 skills/experiences missing from resume
-        5. "recommendations": Array of 5-10 specific improvements to make
-        6. "keywordsToAdd": Array of important keywords from job description to include
-        7. "transferableSkills": Array of transferable skills, which include keywords from experiences that align with the job description
-        8. "optimizedSummary": A rewritten summary section
-        9. "implementedSuggestions": A rewritten resume with gaps, recommendations, required skills, suggested XYZ method and keywordsToAdd are implemented
+        Respond with this exact JSON structure (replace values appropriately):
+        {
+        "targetJobTitle": "Extract or infer the target job title",
+        "matchScore": 75,
+        "strengths": [Array of 3-7 strengths from the resume that aligns with the job description],
+        "gaps": [Array of 3-7 skills/experiences missing from resume],
+        "recommendations": [Array of 5-10 specific improvements],
+        "keywordsToAdd": [Array of important keywords from job description],
+        "transferableSkills": [Array of transferable skills, which include keywords from experiences that align with the job description],
+        "optimizedSummary": "Write an optimized professional summary",
+        "implementedSuggestions": "Provide improved resume content with gaps, recommendations, required skills, suggested XYZ method and keywordsToAdd implemented"
+        }
 
-        Format your response as valid JSON only.`;
+        Rules:
+- Always return valid JSON
+- If information is unclear, make reasonable assumptions
+- Keep all array items as strings
+- Make matchScore a number 0-100
+- Be helpful even with poorly formatted resumes`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -113,6 +122,17 @@ export async function POST(request: NextRequest) {
     let parsedAnalysis;
     try {
       parsedAnalysis = JSON.parse(analysis);
+
+      //Validate the structure
+      if (!parsedAnalysis.targetJobTitle) {
+        parsedAnalysis.targetJobTitle = "Position Analysis";
+      }
+      if (typeof parsedAnalysis.matchScore !== "number") {
+        parsedAnalysis.matchScore = 50;
+      }
+      if (!Array.isArray(parsedAnalysis.strengths)) {
+        parsedAnalysis.strengths = ["Resume analysis completed"];
+      }
       console.log(
         "Successfully parsed JSON. Keys:",
         Object.keys(parsedAnalysis)
@@ -120,10 +140,28 @@ export async function POST(request: NextRequest) {
     } catch (parseError) {
       console.error("Failed to parse cleaned JSON:", parseError);
       console.error("Cleaned analysis was:", analysis);
-      return NextResponse.json(
-        { error: "AI response was not valid JSON format" },
-        { status: 500 }
-      );
+
+      // Create a fallback response when AI fails
+      parsedAnalysis = {
+        targetJobTitle: "Resume Analysis",
+        matchScore: 50,
+        strengths: ["Resume content received", "Shows work experience"],
+        gaps: ["Analysis could not be completed fully"],
+        recommendations: [
+          "Reformat resume with clear sections",
+          "Try submitting again",
+        ],
+        keywordsToAdd: ["Unable to extract from this format"],
+        transferableSkills: [
+          "Communication",
+          "Problem-solving",
+          "Adaptability",
+        ],
+        optimizedSummary:
+          "Resume received but could not be fully analyzed due to formatting.",
+        implementedSuggestions:
+          "Please resubmit with clearer formatting for better analysis.",
+      };
     }
 
     const status = rateLimiter.getStatus(clientIP);
