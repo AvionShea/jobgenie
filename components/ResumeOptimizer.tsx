@@ -101,7 +101,7 @@ export default function ResumeOptimizer() {
         };
     };
 
-    const createEmergencyFallback = (): OptimizationResult => {
+    const createEmergencyFallback = (rawText: string): OptimizationResult => {
         return {
             targetJobTitle: "Analysis Error",
             matchScore: 0,
@@ -115,17 +115,18 @@ export default function ResumeOptimizer() {
         };
     };
 
-    const sanitizeResult = (result: any): OptimizationResult => {
+    const sanitizeResult = (result: unknown): OptimizationResult => {
+        const safeResult = result && typeof result === 'object' ? result as Record<string, unknown> : {};
         return {
-            targetJobTitle: String(result?.targetJobTitle || "Position Not Specified"),
-            matchScore: Number(result?.matchScore) || 0,
-            strengths: Array.isArray(result?.strengths) ? result.strengths.map(String) : ["Resume submitted"],
-            gaps: Array.isArray(result?.gaps) ? result.gaps.map(String) : ["Analysis incomplete"],
-            recommendations: Array.isArray(result?.recommendations) ? result.recommendations.map(String) : ["Please try again"],
-            keywordsToAdd: Array.isArray(result?.keywordsToAdd) ? result.keywordsToAdd.map(String) : ["Keywords not found"],
-            transferableSkills: Array.isArray(result?.transferableSkills) ? result.transferableSkills.map(String) : ["Communication", "Problem-solving"],
-            optimizedSummary: String(result?.optimizedSummary || "Summary could not be generated"),
-            implementedSuggestions: String(result?.implementedSuggestions || "Suggestions could not be generated")
+            targetJobTitle: String(safeResult?.targetJobTitle || "Position Not Specified"),
+            matchScore: Number(safeResult?.matchScore) || 0,
+            strengths: Array.isArray(safeResult?.strengths) ? safeResult.strengths.map(String) : ["Resume submitted"],
+            gaps: Array.isArray(safeResult?.gaps) ? safeResult.gaps.map(String) : ["Analysis incomplete"],
+            recommendations: Array.isArray(safeResult?.recommendations) ? safeResult.recommendations.map(String) : ["Please try again"],
+            keywordsToAdd: Array.isArray(safeResult?.keywordsToAdd) ? safeResult.keywordsToAdd.map(String) : ["Keywords not found"],
+            transferableSkills: Array.isArray(safeResult?.transferableSkills) ? safeResult.transferableSkills.map(String) : ["Communication", "Problem-solving"],
+            optimizedSummary: String(safeResult?.optimizedSummary || "Summary could not be generated"),
+            implementedSuggestions: String(safeResult?.implementedSuggestions || "Suggestions could not be generated")
         };
     };
 
