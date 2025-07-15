@@ -171,7 +171,7 @@ export default function ResumeOptimizer() {
             <button
                 onClick={optimizeResume}
                 disabled={loading || !resumeText || !jobDescription}
-                className="bg-green-500 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+                className="bg-green-500 text-white px-6 py-2 rounded-lg disabled:opacity-50 cursor-pointer"
             >
                 {loading ? 'Optimizing Resume...' : 'Optimize Resume'}
             </button>
