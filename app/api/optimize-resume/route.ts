@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
         "recommendations": [Array of 5-10 specific improvements],
         "keywordsToAdd": [Array of important keywords from job description],
         "transferableSkills": [Array of transferable skills, which include keywords from experiences that align with the job description],
-        "optimizedSummary": "Write an optimized professional summary",
+        "optimizedSummary": "Write an optimized professional summary with 1-3 strong sentences with positioning and unique selling point, using this prompt: A [characteristics] professional with expertise in [field/industry], skilled in [job specific skills or areas of expertise that match the job description role]. Proven ability to drive growth, achieving [specific percentage or figure] in [key metric, e.g., revenue, customer engagement, sales, etc.] within [timeframe], driving [desired outcome or goal].",
         "implementedSuggestions": "Provide improved resume content with gaps, recommendations, required skills, suggested XYZ method and keywordsToAdd implemented"
         }
 
