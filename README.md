@@ -10,12 +10,16 @@ An intelligent job application assistant that leverages AI to analyze job descri
 - **Keyword Optimization** - Identify and suggest important keywords from job descriptions
 - **Transferable Skills Generation** - Identify skills that are transferable and relatable to desired job
 - **Rate Limiting** - Production-ready API rate limiting to manage costs and usage
-
-### 🚧 Planned Features
-
 - **Resume Optimization** - Intelligent resume analysis with personalized improvement recommendations
 - **Match Scoring** - Quantitative assessment of resume-job compatibility
 - **Cover Letter Generation** - AI-generated, personalized cover letters
+
+### 🚧 Planned Features
+
+- **START Method Creator** - Structure behavioral interview answers (guided + free-form)
+- **Job Matcher** - Suggest job titles based on resume and interests
+- **Salary Advisor** - Salary ranges and negotiation tips
+- **Action Verb Generator** - Transform weak bullet points into powerful achievements
 - **Mock Interviews** - Interactive voice-based interview practice with AI
 - **Company Research** - Automated research on company culture, values, and recent news
 - **Networking Assistant** - LinkedIn contact identification and outreach message templates
@@ -147,8 +151,8 @@ Analyzes job descriptions and extracts key information.
   "analysis": "AI-generated job analysis",
   "timestamp": "2024-01-01T00:00:00.000Z",
   "rateLimitStatus": {
-    "remaining": 9,
-    "dailyRemaining": 1299
+    "remaining": 5,
+    "dailyRemaining": 9
   }
 }
 ```
@@ -174,8 +178,8 @@ Provides resume optimization recommendations based on job requirements.
   "analysis": "JSON-formatted optimization results",
   "timestamp": "2024-01-01T00:00:00.000Z",
   "rateLimitStatus": {
-    "remaining": 8,
-    "dailyRemaining": 1298
+    "remaining": 4,
+    "dailyRemaining": 8
   }
 }
 ```
@@ -184,8 +188,8 @@ Provides resume optimization recommendations based on job requirements.
 
 The application implements intelligent rate limiting to stay within API quotas:
 
-- **10 requests per minute** per IP address
-- **50 requests per day** per IP address
+- **5 requests per minute** per IP address
+- **10 requests per day** per IP address
 - Automatic rate limit status reporting
 - User-friendly error messages when limits are exceeded
 
