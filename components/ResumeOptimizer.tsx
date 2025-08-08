@@ -145,6 +145,17 @@ export default function ResumeOptimizer() {
             <div className="grid md:grid-cols-2 gap-6">
                 <div>
                     <label className="block text-sm font-medium mb-2">
+                        Target Job Description:
+                    </label>
+                    <textarea
+                        value={jobDescription}
+                        onChange={(e) => setJobDescription(e.target.value)}
+                        className="w-full h-48 p-3 border rounded-lg"
+                        placeholder="Paste the job description you're targeting..."
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium mb-2">
                         Your Current Resume:
                     </label>
                     <textarea
@@ -155,17 +166,6 @@ export default function ResumeOptimizer() {
                     />
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium mb-2">
-                        Target Job Description:
-                    </label>
-                    <textarea
-                        value={jobDescription}
-                        onChange={(e) => setJobDescription(e.target.value)}
-                        className="w-full h-48 p-3 border rounded-lg"
-                        placeholder="Paste the job description you're targeting..."
-                    />
-                </div>
             </div>
 
             <button
