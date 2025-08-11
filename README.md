@@ -13,7 +13,7 @@ An intelligent job application assistant that leverages AI to analyze job descri
 - **Resume Optimization** - Intelligent resume analysis with personalized improvement recommendations
 - **Match Scoring** - Quantitative assessment of resume-job compatibility
 - **Cover Letter Generation** - AI-generated, personalized cover letters
-- **START Method Creator** - Structure behavioral interview answers (guided + free-form)
+- **STAR Method Creator** - Structure behavioral interview answers (guided + free-form)
 
 ### 🚧 Planned Features
 
