@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import ResumeOptimizer from '@/components/ResumeOptimizer';
 import CoverLetterGenerator from '@/components/CoverLetterGenerator';
+import StarMethodCreator from '@/components/StarMethodCreator';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'job-analysis' | 'resume-optimizer' | 'cover-letter'>('job-analysis');
+  const [activeTab, setActiveTab] = useState<'job-analysis' | 'resume-optimizer' | 'cover-letter' | 'star-method'>('job-analysis');
   const [jobDescription, setJobDescription] = useState('');
   const [analysis, setAnalysis] = useState('');
   const [loading, setLoading] = useState(false);
@@ -77,6 +78,15 @@ export default function Home() {
         >
           Cover Letter
         </button>
+        <button
+          onClick={() => setActiveTab('star-method')}
+          className={`cursor-pointer px-4 py-2 rounded-lg font-medium whitespace-nowrap ${activeTab === 'star-method'
+            ? 'bg-orange-500 text-white'
+            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+        >
+          STAR Method Creator
+        </button>
       </div>
 
       {/* Tab Content */}
@@ -124,6 +134,7 @@ export default function Home() {
 
       {activeTab === 'resume-optimizer' && <ResumeOptimizer />}
       {activeTab === 'cover-letter' && <CoverLetterGenerator />}
+      {activeTab === 'star-method' && <StarMethodCreator />}
     </main>
   );
 }
