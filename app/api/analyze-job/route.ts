@@ -32,15 +32,33 @@ export async function POST(request: NextRequest) {
     // Use Gemini for analysis
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-    const prompt = `Act as a recruiter and resume writer with 14 years of experience in each role. With knowledge of how recruiters read resumes and before providing any help, analyze and scrutinize the pasted job description and extract:
-    1. Top 10 required skills
-    2. Top 5 nice-to-have skills
-    3. Key responsibilities
-    4. Keywords that should be included in a resume to get through the ATS
+    const prompt = `Act as a recruiter and resume writer with 15 years of experience in each role. Analyze the pasted job description like a hiring manager and extract ONLY what is essential for ATS and recruiter screening.
 
-    Job Description: ${jobDescription}
+Job Description:
+${jobDescription}
 
-    Format as JSON with keys: requiredSkills, niceToHave, responsibilities, keywords`;
+Instructions:
+- Output valid JSON only. No commentary or markdown.
+- Return four arrays of strings: requiredSkills, niceToHave, responsibilities, keywords.
+- Keep items concise (single words or short phrases). No sentences.
+- Remove duplicates, plural/singular variants, and near-synonyms. Use the most common ATS term.
+- Prefer skills explicitly listed in the job description. If unclear, infer from domain context.
+- For responsibilities, extract action-oriented phrases starting with a verb (present tense).
+- For keywords, include exact phrasing used in the job description where possible (e.g., “customer SLAs”, “incident management”).
+- Normalize capitalization (e.g., AWS, SQL, API, CI/CD) and keep technology names accurate.
+- Maximum lengths:
+  • requiredSkills: top 10
+  • niceToHave: top 5
+  • responsibilities: 6–12
+  • keywords: 12–20
+
+Output JSON schema (use only these keys):
+{
+  "requiredSkills": ["..."],
+  "niceToHave": ["..."],
+  "responsibilities": ["..."],
+  "keywords": ["..."]
+}`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
