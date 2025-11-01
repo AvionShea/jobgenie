@@ -61,35 +61,52 @@ export async function POST(request: NextRequest) {
     console.log("Starting AI analysis...");
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-    const prompt = `You are an expert resume optimizer with 20+ years of experience. Analyze the resume and job description and provide specific recommendations utilizing the required skills.
+    const prompt = `IMPORTANT: You MUST respond with valid JSON only, no matter what. If the resume is poorly formatted or missing information, make intelligent assumptions and still complete all sections.
 
-    IMPORTANT: You MUST respond with valid JSON only, no matter what. If the resume is poorly formatted, do your best analysis anyway.
-        
-        RESUME:
-        ${resumeText}
+ROLE: You are an expert resume optimizer and recruiter with 20+ years of experience in technical recruiting, hiring strategy, and ATS keyword optimization.
 
-        JOB DESCRIPTION:
-        ${jobDescription}
+GOAL: Analyze the RESUME and JOB DESCRIPTION below to:
+- Identify the candidate’s alignment with the target role.
+- Rewrite and optimize content using quantifiable results, strong action verbs, and keywords that increase ATS ranking and recruiter engagement.
+- Bridge skill gaps through transferable experience and phrasing that matches the job description.
 
-        Respond with this exact JSON structure (replace values appropriately):
-        {
-        "targetJobTitle": "Extract or infer the target job title",
-        "matchScore": 75,
-        "strengths": [Array of 3-7 strengths from the resume that aligns with the job description],
-        "gaps": [Array of 3-7 skills/experiences missing from resume],
-        "recommendations": [Array of 5-10 specific improvements],
-        "keywordsToAdd": [Array of important keywords from job description],
-        "transferableSkills": [Array of identified skills from resume that are transferable and relatable to job description/desired job.],
-        "optimizedSummary": "Write an optimized professional summary with 1-3 strong sentences with positioning and unique selling point, using this prompt: A [characteristics] professional with expertise in [field/industry], skilled in [job specific skills or areas of expertise that match the job description role]. Proven ability to drive growth, achieving [specific percentage or figure] in [key metric, e.g., revenue, customer engagement, sales, etc.] within [timeframe], driving [desired outcome or goal].",
-        "implementedSuggestions": "Provide improved resume content with gaps, recommendations, required skills, suggested XYZ method and keywordsToAdd implemented"
-        }
+RESUME:
+${resumeText}
 
-        Rules:
-- Always return valid JSON
-- If information is unclear, make reasonable assumptions
-- Keep all array items as strings
-- Make matchScore a number 0-100
-- Be helpful even with poorly formatted resumes`;
+JOB DESCRIPTION:
+${jobDescription}
+
+Respond with this exact JSON structure (replace values appropriately):
+{
+  "targetJobTitle": "Extract or infer the target job title based on job description",
+  "matchScore": 0-100,
+  "strengths": [
+    "3-7 key strengths from the resume that align with the job description"
+  ],
+  "gaps": [
+    "3-7 missing or underrepresented skills, tools, or experiences"
+  ],
+  "recommendations": [
+    "5-10 specific and actionable improvements to align resume with job description (focus on quantification, phrasing, and keyword integration)"
+  ],
+  "keywordsToAdd": [
+    "10-20 job-specific keywords or technologies from the job description to boost ATS score"
+  ],
+  "transferableSkills": [
+    "5-10 transferable or cross-functional skills from resume that relate to the target job"
+  ],
+  "optimizedSummary": "Write an optimized 2-3 sentence professional summary using this pattern: 'A [adjective] [target job title or professional] with expertise in [primary domains or technologies], skilled in [key job skills]. Proven success in [achievements or metrics] leading to [positive outcome].'",
+  "implementedSuggestions": "Rewrite and expand resume bullet points using the XYZ formula (accomplished [X] as measured by [Y], by doing [Z]) while integrating all recommendations, missing skills, and keywordsToAdd naturally. Maintain clear, concise, professional tone optimized for ATS and recruiters."
+}
+
+Rules:
+- Always return valid JSON (use quotes around all keys and values)
+- Be specific, realistic, and metrics-driven
+- Do not include commentary or markdown outside the JSON
+- If a section cannot be determined, fill it with 'N/A'
+- Keep arrays as string lists, no nested arrays or objects
+- Avoid generic or filler phrases
+- Assume the goal is to reach Tier I recruiter visibility in ATS parsing`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
